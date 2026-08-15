@@ -8,7 +8,7 @@ export function ProductCard({
   categoryName,
 }: {
   product: Product;
-  categoryName?: string;
+  categoryName?: string | undefined;
 }) {
   return (
     <Link

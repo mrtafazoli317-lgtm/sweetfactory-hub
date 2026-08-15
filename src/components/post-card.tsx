@@ -7,7 +7,7 @@ export function PostCard({
   categoryName,
 }: {
   post: BlogPost;
-  categoryName?: string;
+  categoryName?: string | undefined;
 }) {
   return (
     <Link
