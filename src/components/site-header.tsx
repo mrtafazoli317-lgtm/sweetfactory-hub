@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { Menu, X, MessageCircle } from "lucide-react";
+import { Menu, X, MessageCircle, ShoppingBag } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { contentMap, siteContentQuery, useContentValue } from "@/lib/data";
 import { whatsappLink } from "@/lib/format";
+import { useCart } from "@/hooks/use-cart";
+import { CartDrawer } from "@/components/cart-drawer";
 
 const links = [
   { to: "/", label: "خانه" },
@@ -18,21 +20,18 @@ export function SiteHeader() {
   const [open, setOpen] = useState(false);
   const { data } = useQuery(siteContentQuery);
   const map = contentMap(data);
-  const brand = useContentValue(map, "brand_name");
   const tagline = useContentValue(map, "brand_tagline");
   const whatsapp = useContentValue(map, "contact_whatsapp");
+  const { count, openCart } = useCart();
 
   return (
     <header className="sticky top-0 z-50 border-b border-border/60 bg-background/85 backdrop-blur-lg">
       <div className="container-page flex h-18 items-center justify-between gap-4 py-3">
-        <Link to="/" className="flex items-center gap-3">
-          <span className="flex size-11 items-center justify-center rounded-xl bg-espresso text-sm font-bold text-gold">
-            ۲۰
+        <Link to="/" className="flex flex-col items-start leading-tight">
+          <span className="text-gradient-gold text-xl font-bold tracking-[0.25em]">
+            20K A M
           </span>
-          <span className="leading-tight">
-            <span className="block text-lg font-bold">{brand}</span>
-            <span className="block text-[11px] text-muted-foreground">{tagline}</span>
-          </span>
+          <span className="block text-[11px] text-muted-foreground">{tagline}</span>
         </Link>
 
         <nav className="hidden items-center gap-1 md:flex">
@@ -50,6 +49,19 @@ export function SiteHeader() {
         </nav>
 
         <div className="flex items-center gap-2">
+          <button
+            type="button"
+            aria-label="سبد خرید"
+            onClick={openCart}
+            className="relative inline-flex size-10 items-center justify-center rounded-lg border border-border transition-colors hover:bg-secondary"
+          >
+            <ShoppingBag className="size-4.5" />
+            {count > 0 ? (
+              <span className="absolute -top-1.5 -left-1.5 flex size-5 items-center justify-center rounded-full bg-accent text-[10px] font-bold text-accent-foreground">
+                {count}
+              </span>
+            ) : null}
+          </button>
           <Button asChild size="sm" className="hidden sm:inline-flex">
             <a href={whatsappLink(whatsapp, "سلام، برای سفارش محصولات ۲۰کام تماس گرفتم.")} target="_blank" rel="noreferrer">
               <MessageCircle className="size-4" />
@@ -66,6 +78,7 @@ export function SiteHeader() {
           </button>
         </div>
       </div>
+      <CartDrawer />
 
       {open ? (
         <div className="border-t border-border bg-background md:hidden">
