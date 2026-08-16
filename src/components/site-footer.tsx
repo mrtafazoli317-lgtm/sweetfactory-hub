@@ -18,12 +18,7 @@ export function SiteFooter() {
     <footer className="surface-dark mt-24">
       <div className="container-page grid gap-10 py-14 md:grid-cols-4">
         <div className="md:col-span-2">
-          <div className="flex items-center gap-3">
-            <span className="flex size-11 items-center justify-center rounded-xl bg-gold text-sm font-bold text-espresso">
-              ۲۰
-            </span>
-            <span className="text-lg font-bold">{brand}</span>
-          </div>
+          <span className="text-lg font-bold tracking-[0.25em] text-gold">20K A M</span>
           <p className="mt-4 max-w-md text-sm leading-8 opacity-80">{note}</p>
         </div>
 
