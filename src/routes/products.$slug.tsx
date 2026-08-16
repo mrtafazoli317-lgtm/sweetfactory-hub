@@ -1,10 +1,11 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
-import { ArrowRight, MessageCircle, Package, Scale, Tag } from "lucide-react";
+import { ArrowRight, Minus, MessageCircle, Package, Plus, Scale, ShoppingBag, Tag } from "lucide-react";
 import { SiteLayout } from "@/components/site-layout";
 import { ProductCard } from "@/components/product-card";
 import { Button } from "@/components/ui/button";
+import { useCart } from "@/hooks/use-cart";
 import {
   categoriesQuery,
   contentMap,
@@ -38,6 +39,8 @@ function ProductDetail() {
   const { data: categories } = useQuery(categoriesQuery);
   const { data: content } = useQuery(siteContentQuery);
   const [activeImage, setActiveImage] = useState<string | null>(null);
+  const [qty, setQty] = useState(1);
+  const { addItem } = useCart();
 
   const whatsapp = useContentValue(contentMap(content), "contact_whatsapp");
   const product = (products ?? []).find((p) => p.slug === slug);
@@ -145,7 +148,32 @@ function ProductDetail() {
                   دسته: {category?.name ?? "—"}
                 </div>
               </div>
-              <Button asChild size="lg" className="mt-6 w-full">
+              <div className="mt-6 flex items-center gap-3">
+                <div className="flex items-center gap-3 rounded-xl border border-border px-2 py-2">
+                  <button
+                    type="button"
+                    aria-label="کم کردن تعداد"
+                    onClick={() => setQty((q) => Math.max(1, q - 1))}
+                    className="flex size-8 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
+                  >
+                    <Minus className="size-4" />
+                  </button>
+                  <span className="w-6 text-center text-sm font-bold">{qty}</span>
+                  <button
+                    type="button"
+                    aria-label="زیاد کردن تعداد"
+                    onClick={() => setQty((q) => q + 1)}
+                    className="flex size-8 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
+                  >
+                    <Plus className="size-4" />
+                  </button>
+                </div>
+                <Button size="lg" className="flex-1" onClick={() => addItem(product, qty)}>
+                  <ShoppingBag className="size-4" />
+                  افزودن به سبد خرید
+                </Button>
+              </div>
+              <Button asChild variant="outline" size="lg" className="mt-3 w-full">
                 <a
                   href={whatsappLink(whatsapp, `سلام، برای سفارش «${product.name}» تماس گرفتم.`)}
                   target="_blank"
