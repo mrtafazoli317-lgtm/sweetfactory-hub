@@ -50,7 +50,7 @@ function AdminLayout() {
       <aside className="surface-dark lg:min-h-screen lg:w-64">
         <div className="flex items-center justify-between p-5">
           <Link to="/" className="text-lg font-bold tracking-[0.3em] text-gold">
-            20 K A M
+            20K A M
           </Link>
         </div>
         <nav className="flex gap-1 overflow-x-auto px-3 pb-4 lg:flex-col lg:overflow-visible">
