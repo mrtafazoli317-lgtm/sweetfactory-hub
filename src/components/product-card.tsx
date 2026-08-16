@@ -1,7 +1,8 @@
 import { Link } from "@tanstack/react-router";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, ShoppingBag } from "lucide-react";
 import type { Product } from "@/lib/data";
 import { formatPrice } from "@/lib/format";
+import { useCart } from "@/hooks/use-cart";
 
 export function ProductCard({
   product,
@@ -10,6 +11,8 @@ export function ProductCard({
   product: Product;
   categoryName?: string | undefined;
 }) {
+  const { addItem } = useCart();
+
   return (
     <Link
       to="/products/$slug"
@@ -28,6 +31,18 @@ export function ProductCard({
             {categoryName}
           </span>
         ) : null}
+        <button
+          type="button"
+          aria-label="افزودن به سبد خرید"
+          onClick={(event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            addItem(product, 1);
+          }}
+          className="absolute bottom-3 left-3 flex size-10 items-center justify-center rounded-full bg-espresso text-cream shadow-lift transition-transform hover:scale-105 active:scale-95"
+        >
+          <ShoppingBag className="size-4.5" />
+        </button>
       </div>
       <div className="flex flex-1 flex-col gap-2 p-5">
         <h3 className="text-base font-bold">{product.name}</h3>
