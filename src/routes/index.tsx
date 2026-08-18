@@ -69,7 +69,9 @@ function HomePage() {
   return (
     <SiteLayout>
       {/* HERO */}
+      <div className="relative">
       <section id="hero" className="relative overflow-hidden">
+
         <div className="absolute inset-0">
           <img
             src={heroImage || "/images/hero.jpg"}
