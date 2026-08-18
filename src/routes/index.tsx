@@ -117,10 +117,13 @@ function HomePage() {
           </Reveal>
         </div>
 
-        {cookieProduct?.image_url ? (
-          <FlyingCookie src={cookieProduct.image_url} heroId="hero" targetId="categories" />
-        ) : null}
       </section>
+
+      {cookieProduct?.image_url ? (
+        <FlyingCookie src={cookieProduct.image_url} heroId="hero" targetId="categories" />
+      ) : null}
+      </div>
+
 
       {/* STATS */}
       <section className="border-b border-border bg-card">
