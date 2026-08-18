@@ -5,6 +5,7 @@ import { SiteLayout } from "@/components/site-layout";
 import { Reveal } from "@/components/reveal";
 import { ProductCard } from "@/components/product-card";
 import { PostCard } from "@/components/post-card";
+import { FlyingCookie } from "@/components/flying-cookie";
 import { Button } from "@/components/ui/button";
 import {
   blogCategoriesQuery,
@@ -60,11 +61,17 @@ function HomePage() {
 
   const featured = (products ?? []).filter((p) => p.is_active && p.is_featured).slice(0, 4);
   const latestPosts = (posts ?? []).filter((p) => p.is_published).slice(0, 3);
+  const cookieProduct =
+    (products ?? []).find((p) => p.is_active && p.name.includes("گردو")) ??
+    (products ?? []).find((p) => p.is_active && p.name.includes("کلوچه")) ??
+    (products ?? [])[0];
 
   return (
     <SiteLayout>
       {/* HERO */}
-      <section className="relative overflow-hidden">
+      <div className="relative">
+      <section id="hero" className="relative overflow-hidden">
+
         <div className="absolute inset-0">
           <img
             src={heroImage || "/images/hero.jpg"}
@@ -109,7 +116,14 @@ function HomePage() {
             </div>
           </Reveal>
         </div>
+
       </section>
+
+      {cookieProduct?.image_url ? (
+        <FlyingCookie src={cookieProduct.image_url} heroId="hero" targetId="categories" />
+      ) : null}
+      </div>
+
 
       {/* STATS */}
       <section className="border-b border-border bg-card">
@@ -131,7 +145,7 @@ function HomePage() {
       </section>
 
       {/* CATEGORIES */}
-      <section className="container-page py-20">
+      <section id="categories" className="relative container-page py-20">
         <Reveal>
           <div className="mb-10 text-center">
             <h2 className="text-3xl md:text-4xl">دسته‌بندی محصولات</h2>
