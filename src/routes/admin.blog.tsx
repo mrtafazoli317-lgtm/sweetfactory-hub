@@ -18,7 +18,7 @@ import {
 import { ImageField } from "@/components/admin/image-field";
 import { supabase } from "@/integrations/supabase/client";
 import { blogCategoriesQuery, blogPostsQuery, type BlogPost } from "@/lib/data";
-import { faDate } from "@/lib/format";
+import { formatDate } from "@/lib/format";
 
 export const Route = createFileRoute("/admin/blog")({
   component: AdminBlog,
@@ -131,7 +131,7 @@ function AdminBlog() {
             <div className="mt-3 flex items-center gap-2 text-xs text-muted-foreground">
               <span>{categories?.find((c) => c.id === post.category_id)?.name ?? "بدون دسته"}</span>
               <span>•</span>
-              <span>{faDate(post.published_at)}</span>
+              <span>{formatDate(post.published_at)}</span>
               {!post.is_published ? (
                 <span className="rounded-full bg-secondary px-2 py-0.5">پیش‌نویس</span>
               ) : null}
