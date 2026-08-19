@@ -115,11 +115,8 @@ function HomePage() {
         </div>
 
       </section>
-
-      {cookieProduct?.image_url ? (
-        <FlyingCookie src={cookieProduct.image_url} heroId="hero" targetId="categories" />
-      ) : null}
       </div>
+
 
 
       {/* STATS */}
