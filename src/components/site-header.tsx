@@ -20,7 +20,6 @@ export function SiteHeader() {
   const [open, setOpen] = useState(false);
   const { data } = useQuery(siteContentQuery);
   const map = contentMap(data);
-  const tagline = useContentValue(map, "brand_tagline");
   const whatsapp = useContentValue(map, "contact_whatsapp");
   const { count, openCart } = useCart();
 
