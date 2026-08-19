@@ -5,7 +5,7 @@ import { SiteLayout } from "@/components/site-layout";
 import { Reveal } from "@/components/reveal";
 import { ProductCard } from "@/components/product-card";
 import { PostCard } from "@/components/post-card";
-import { FlyingCookie } from "@/components/flying-cookie";
+
 import { Button } from "@/components/ui/button";
 import {
   blogCategoriesQuery,
