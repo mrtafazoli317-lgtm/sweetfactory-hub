@@ -14,6 +14,7 @@ const links = [
   { to: "/blog", label: "مجله" },
   { to: "/about", label: "درباره ما" },
   { to: "/contact", label: "تماس" },
+  { to: "/account", label: "پنل کاربری" },
 ] as const;
 
 export function SiteHeader() {
