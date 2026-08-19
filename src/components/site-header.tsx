@@ -27,12 +27,12 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-50 border-b border-border/60 bg-background/85 backdrop-blur-lg">
       <div className="container-page flex h-18 items-center justify-between gap-4 py-3">
-        <Link to="/" className="flex flex-col items-start leading-tight">
+        <Link to="/" className="flex items-center leading-tight">
           <span className="text-gradient-gold text-xl font-bold tracking-[0.25em]">
-            20K A M
+            20 K A M
           </span>
-          <span className="block text-[11px] text-muted-foreground">{tagline}</span>
         </Link>
+
 
         <nav className="hidden items-center gap-1 md:flex">
           {links.map((link) => (
