@@ -61,10 +61,7 @@ function HomePage() {
 
   const featured = (products ?? []).filter((p) => p.is_active && p.is_featured).slice(0, 4);
   const latestPosts = (posts ?? []).filter((p) => p.is_published).slice(0, 3);
-  const cookieProduct =
-    (products ?? []).find((p) => p.is_active && p.name.includes("گردو")) ??
-    (products ?? []).find((p) => p.is_active && p.name.includes("کلوچه")) ??
-    (products ?? [])[0];
+
 
   return (
     <SiteLayout>
