@@ -5,7 +5,7 @@ import { SiteLayout } from "@/components/site-layout";
 import { Reveal } from "@/components/reveal";
 import { ProductCard } from "@/components/product-card";
 import { PostCard } from "@/components/post-card";
-import { FlyingCookie } from "@/components/flying-cookie";
+
 import { Button } from "@/components/ui/button";
 import {
   blogCategoriesQuery,
@@ -61,10 +61,7 @@ function HomePage() {
 
   const featured = (products ?? []).filter((p) => p.is_active && p.is_featured).slice(0, 4);
   const latestPosts = (posts ?? []).filter((p) => p.is_published).slice(0, 3);
-  const cookieProduct =
-    (products ?? []).find((p) => p.is_active && p.name.includes("گردو")) ??
-    (products ?? []).find((p) => p.is_active && p.name.includes("کلوچه")) ??
-    (products ?? [])[0];
+
 
   return (
     <SiteLayout>
@@ -118,11 +115,8 @@ function HomePage() {
         </div>
 
       </section>
-
-      {cookieProduct?.image_url ? (
-        <FlyingCookie src={cookieProduct.image_url} heroId="hero" targetId="categories" />
-      ) : null}
       </div>
+
 
 
       {/* STATS */}
