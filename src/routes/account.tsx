@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { KeyRound, Loader2, LogOut, MailCheck, ShieldCheck, User } from "lucide-react";
+import { KeyRound, Loader2, LogOut, MailCheck, Package, ShieldCheck, User } from "lucide-react";
 import { SiteLayout } from "@/components/site-layout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -9,6 +9,8 @@ import { Label } from "@/components/ui/label";
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/use-auth";
+import { myOrdersQuery, orderStatusLabel } from "@/lib/orders";
+import { formatDate, formatPrice } from "@/lib/format";
 
 export const Route = createFileRoute("/account")({
   head: () => ({
@@ -55,7 +57,9 @@ function AccountPage() {
 }
 
 function AuthCard() {
-  const [mode, setMode] = useState<Mode>("signup");
+  const [mode, setMode] = useState<Mode>("login");
+  const [usePasswordLogin, setUsePasswordLogin] = useState(false);
+  const [verifyType, setVerifyType] = useState<"signup" | "email">("email");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [fullName, setFullName] = useState("");
@@ -75,6 +79,31 @@ function AuthCard() {
     setError(null);
     setInfo(null);
   };
+
+  const onSendCode = async (e: React.FormEvent) => {
+    e.preventDefault();
+    reset();
+    if (!email.trim()) {
+      setError("ایمیل خود را وارد کنید.");
+      return;
+    }
+    setBusy(true);
+    const { error: err } = await supabase.auth.signInWithOtp({
+      email: email.trim(),
+      options: { shouldCreateUser: true, emailRedirectTo: `${window.location.origin}/account` },
+    });
+    setBusy(false);
+    if (err) {
+      setError(message(err.message));
+      return;
+    }
+    setCode("");
+    setVerifyType("email");
+    setMode("verify");
+    setCooldown(45);
+    setInfo("کد ورود ۶ رقمی به ایمیل شما ارسال شد.");
+  };
+
 
   const onSignup = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -97,6 +126,8 @@ function AuthCard() {
       window.location.reload();
       return;
     }
+    setCode("");
+    setVerifyType("signup");
     setMode("verify");
     setCooldown(45);
     setInfo("کد تایید ۶ رقمی به ایمیل شما ارسال شد.");
@@ -113,6 +144,8 @@ function AuthCard() {
     setBusy(false);
     if (err) {
       if (err.message.toLowerCase().includes("email not confirmed")) {
+        setCode("");
+        setVerifyType("signup");
         setMode("verify");
         setInfo("ایمیل شما تایید نشده است. کد تایید را وارد کنید یا ارسال مجدد بزنید.");
         return;
@@ -129,11 +162,20 @@ function AuthCard() {
       return;
     }
     setBusy(true);
-    const { error: err } = await supabase.auth.verifyOtp({
+    let { error: err } = await supabase.auth.verifyOtp({
       email: email.trim(),
       token: code,
-      type: "signup",
+      type: verifyType,
     });
+    if (err) {
+      // بعضی کدها با نوع دیگر صادر شده‌اند؛ حالت جایگزین را هم امتحان می‌کنیم.
+      const fallback = await supabase.auth.verifyOtp({
+        email: email.trim(),
+        token: code,
+        type: verifyType === "email" ? "signup" : "email",
+      });
+      err = fallback.error;
+    }
     setBusy(false);
     if (err) {
       setError(message(err.message));
@@ -145,11 +187,17 @@ function AuthCard() {
   const onResend = async () => {
     reset();
     setBusy(true);
-    const { error: err } = await supabase.auth.resend({
-      type: "signup",
-      email: email.trim(),
-      options: { emailRedirectTo: `${window.location.origin}/account` },
-    });
+    const { error: err } =
+      verifyType === "signup"
+        ? await supabase.auth.resend({
+            type: "signup",
+            email: email.trim(),
+            options: { emailRedirectTo: `${window.location.origin}/account` },
+          })
+        : await supabase.auth.signInWithOtp({
+            email: email.trim(),
+            options: { shouldCreateUser: true, emailRedirectTo: `${window.location.origin}/account` },
+          });
     setBusy(false);
     if (err) {
       setError(message(err.message));
@@ -158,6 +206,7 @@ function AuthCard() {
     setCooldown(45);
     setInfo("کد تایید دوباره ارسال شد.");
   };
+
 
   return (
     <section className="container-page flex min-h-[70vh] items-center justify-center py-16">
@@ -220,10 +269,15 @@ function AuthCard() {
             <p className="mt-2 text-sm leading-7 text-muted-foreground">
               {mode === "signup"
                 ? "ایمیل و رمز عبور خود را وارد کنید؛ برای ورود اولیه یک کد تایید برایتان ارسال می‌شود."
-                : "با ایمیل و رمز عبور خود وارد شوید."}
+                : usePasswordLogin
+                  ? "با ایمیل و رمز عبور خود وارد شوید."
+                  : "ایمیل خود را وارد کنید؛ یک کد ۶ رقمی برایتان ارسال می‌شود و بدون رمز عبور وارد می‌شوید."}
             </p>
 
-            <form className="mt-6 space-y-4" onSubmit={mode === "signup" ? onSignup : onLogin}>
+            <form
+              className="mt-6 space-y-4"
+              onSubmit={mode === "signup" ? onSignup : usePasswordLogin ? onLogin : onSendCode}
+            >
               {mode === "signup" ? (
                 <div className="space-y-2">
                   <Label htmlFor="fullName">نام و نام خانوادگی</Label>
@@ -247,26 +301,41 @@ function AuthCard() {
                   onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
-              <div className="space-y-2">
-                <Label htmlFor="password">رمز عبور</Label>
-                <Input
-                  id="password"
-                  type="password"
-                  dir="ltr"
-                  required
-                  minLength={6}
-                  autoComplete={mode === "signup" ? "new-password" : "current-password"}
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-              </div>
+              {mode === "signup" || usePasswordLogin ? (
+                <div className="space-y-2">
+                  <Label htmlFor="password">رمز عبور</Label>
+                  <Input
+                    id="password"
+                    type="password"
+                    dir="ltr"
+                    required
+                    minLength={6}
+                    autoComplete={mode === "signup" ? "new-password" : "current-password"}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                </div>
+              ) : null}
               {error ? <p className="text-sm text-destructive">{error}</p> : null}
               {info ? <p className="text-sm text-accent">{info}</p> : null}
               <Button type="submit" className="w-full" disabled={busy}>
                 {busy ? <Loader2 className="size-4 animate-spin" /> : null}
-                {mode === "signup" ? "ثبت‌نام" : "ورود"}
+                {mode === "signup" ? "ثبت‌نام" : usePasswordLogin ? "ورود" : "ارسال کد ورود به ایمیل"}
               </Button>
             </form>
+
+            {mode === "login" ? (
+              <button
+                type="button"
+                className="mt-4 w-full text-center text-sm text-muted-foreground underline-offset-4 hover:underline"
+                onClick={() => {
+                  setUsePasswordLogin((v) => !v);
+                  reset();
+                }}
+              >
+                {usePasswordLogin ? "ورود با کد ایمیل (بدون رمز)" : "ورود با رمز عبور"}
+              </button>
+            ) : null}
 
             <p className="mt-5 text-center text-sm text-muted-foreground">
               {mode === "signup" ? "قبلاً ثبت‌نام کرده‌اید؟" : "حساب کاربری ندارید؟"}{" "}
@@ -281,6 +350,7 @@ function AuthCard() {
                 {mode === "signup" ? "ورود" : "ثبت‌نام"}
               </button>
             </p>
+
           </>
         )}
       </div>
@@ -398,6 +468,10 @@ function Dashboard() {
           )}
         </div>
 
+        <OrdersCard userId={userId} />
+
+
+
         <div className="rounded-3xl border border-border bg-card p-7 shadow-soft">
           <h2 className="flex items-center gap-2 text-lg">
             <KeyRound className="size-4 text-accent" />
@@ -424,5 +498,69 @@ function Dashboard() {
         </div>
       </div>
     </section>
+  );
+}
+
+function OrdersCard({ userId }: { userId: string | undefined }) {
+  const { data: orders, isLoading } = useQuery(myOrdersQuery(userId));
+
+  return (
+    <div className="rounded-3xl border border-border bg-card p-7 shadow-soft">
+      <h2 className="flex items-center gap-2 text-lg">
+        <Package className="size-4 text-accent" />
+        سفارش‌های من
+      </h2>
+      <p className="mt-1 text-sm text-muted-foreground">فهرست سفارش‌های ثبت‌شده و وضعیت پیگیری آن‌ها.</p>
+
+      {isLoading ? (
+        <Loader2 className="mt-6 size-5 animate-spin text-accent" />
+      ) : !orders || orders.length === 0 ? (
+        <div className="mt-6 rounded-2xl border border-dashed border-border p-8 text-center">
+          <p className="text-sm text-muted-foreground">هنوز سفارشی ثبت نکرده‌اید.</p>
+          <Button asChild variant="secondary" className="mt-4">
+            <Link to="/products">مشاهده محصولات</Link>
+          </Button>
+        </div>
+      ) : (
+        <ul className="mt-6 space-y-4">
+          {orders.map((order) => (
+            <li key={order.id} className="rounded-2xl border border-border p-5">
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <div>
+                  <p className="text-sm font-bold">سفارش #{order.id.slice(0, 8)}</p>
+                  <p className="mt-1 text-xs text-muted-foreground">{formatDate(order.created_at)}</p>
+                </div>
+                <span className="rounded-full bg-secondary px-3 py-1 text-xs font-semibold text-secondary-foreground">
+                  {orderStatusLabel[order.status] ?? order.status}
+                </span>
+              </div>
+              <ul className="mt-4 space-y-2">
+                {order.order_items.map((item) => (
+                  <li key={item.id} className="flex items-center gap-3 text-sm">
+                    {item.image_url ? (
+                      <img
+                        src={item.image_url}
+                        alt={item.name}
+                        className="size-10 rounded-lg border border-border object-cover"
+                      />
+                    ) : null}
+                    <span className="flex-1">{item.name}</span>
+                    <span className="text-muted-foreground">× {item.quantity}</span>
+                    <span className="font-medium">{formatPrice(item.price * item.quantity)}</span>
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-4 flex items-center justify-between border-t border-border pt-3 text-sm">
+                <span className="text-muted-foreground">مبلغ کل</span>
+                <span className="font-bold">{formatPrice(order.total)}</span>
+              </div>
+              {order.address ? (
+                <p className="mt-2 text-xs leading-6 text-muted-foreground">آدرس: {order.address}</p>
+              ) : null}
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
   );
 }

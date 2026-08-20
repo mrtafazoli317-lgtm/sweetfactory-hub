@@ -1,5 +1,7 @@
-import { useQuery } from "@tanstack/react-query";
-import { Minus, Plus, ShoppingBag, Trash2, MessageCircle } from "lucide-react";
+import { useState } from "react";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { Link } from "@tanstack/react-router";
+import { Minus, Plus, ShoppingBag, Trash2, MessageCircle, Loader2, CheckCircle2 } from "lucide-react";
 import {
   Sheet,
   SheetContent,
@@ -7,7 +9,11 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { useCart } from "@/hooks/use-cart";
+import { useAuth } from "@/hooks/use-auth";
+import { createOrder } from "@/lib/orders";
 import { contentMap, siteContentQuery, useContentValue } from "@/lib/data";
 import { formatPrice, whatsappLink } from "@/lib/format";
 
@@ -15,6 +21,41 @@ export function CartDrawer() {
   const { items, total, isOpen, closeCart, increment, decrement, removeItem, clear } = useCart();
   const { data } = useQuery(siteContentQuery);
   const whatsapp = useContentValue(contentMap(data), "contact_whatsapp");
+  const { session } = useAuth();
+  const queryClient = useQueryClient();
+  const [phone, setPhone] = useState("");
+  const [address, setAddress] = useState("");
+  const [placing, setPlacing] = useState(false);
+  const [placed, setPlaced] = useState(false);
+  const [orderError, setOrderError] = useState<string | null>(null);
+
+  const onPlaceOrder = async () => {
+    if (!session?.user) return;
+    if (!phone.trim() || !address.trim()) {
+      setOrderError("شماره تماس و آدرس را وارد کنید.");
+      return;
+    }
+    setPlacing(true);
+    setOrderError(null);
+    try {
+      await createOrder({
+        userId: session.user.id,
+        items,
+        total,
+        fullName: (session.user.user_metadata?.full_name as string) ?? "",
+        phone: phone.trim(),
+        address: address.trim(),
+      });
+      clear();
+      setPlaced(true);
+      void queryClient.invalidateQueries({ queryKey: ["orders"] });
+    } catch {
+      setOrderError("ثبت سفارش انجام نشد، دوباره تلاش کنید.");
+    } finally {
+      setPlacing(false);
+    }
+  };
+
 
   const orderMessage = () => {
     const lines = items.map(
@@ -40,11 +81,24 @@ export function CartDrawer() {
         </SheetHeader>
 
         {items.length === 0 ? (
-          <div className="flex flex-1 flex-col items-center justify-center gap-2 px-6 text-center">
-            <ShoppingBag className="size-10 text-muted-foreground/40" />
-            <p className="text-sm text-muted-foreground">سبد خرید شما خالی است.</p>
+          <div className="flex flex-1 flex-col items-center justify-center gap-3 px-6 text-center">
+            {placed ? (
+              <>
+                <CheckCircle2 className="size-10 text-accent" />
+                <p className="text-sm text-muted-foreground">سفارش شما ثبت شد؛ در پنل کاربری قابل پیگیری است.</p>
+                <Button asChild variant="secondary" onClick={() => closeCart()}>
+                  <Link to="/account">مشاهده سفارش‌ها</Link>
+                </Button>
+              </>
+            ) : (
+              <>
+                <ShoppingBag className="size-10 text-muted-foreground/40" />
+                <p className="text-sm text-muted-foreground">سبد خرید شما خالی است.</p>
+              </>
+            )}
           </div>
         ) : (
+
           <>
             <div className="flex-1 overflow-y-auto px-5 py-4">
               <ul className="space-y-4">
@@ -108,7 +162,47 @@ export function CartDrawer() {
                 <span className="text-lg font-bold text-foreground">{formatPrice(total)}</span>
               </div>
 
-              <Button asChild size="lg" className="mt-4 w-full">
+
+              {session ? (
+                <div className="mt-4 space-y-3 rounded-2xl border border-border bg-secondary/40 p-4">
+                  <p className="text-sm font-bold">ثبت سفارش در سایت</p>
+                  <div className="space-y-1.5">
+                    <Label htmlFor="cart-phone" className="text-xs">شماره تماس</Label>
+                    <Input
+                      id="cart-phone"
+                      dir="ltr"
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
+                      maxLength={20}
+                    />
+                  </div>
+                  <div className="space-y-1.5">
+                    <Label htmlFor="cart-address" className="text-xs">آدرس تحویل</Label>
+                    <Input
+                      id="cart-address"
+                      value={address}
+                      onChange={(e) => setAddress(e.target.value)}
+                      maxLength={300}
+                    />
+                  </div>
+                  {orderError ? <p className="text-xs text-destructive">{orderError}</p> : null}
+                  <Button size="lg" className="w-full" onClick={onPlaceOrder} disabled={placing}>
+                    {placing ? <Loader2 className="size-4 animate-spin" /> : null}
+                    ثبت سفارش
+                  </Button>
+                </div>
+              ) : (
+                <div className="mt-4 rounded-2xl border border-border bg-secondary/40 p-4 text-center">
+                  <p className="text-xs leading-6 text-muted-foreground">
+                    برای ثبت و پیگیری سفارش، وارد پنل کاربری شوید.
+                  </p>
+                  <Button asChild variant="secondary" className="mt-3 w-full" onClick={() => closeCart()}>
+                    <Link to="/account">ورود / ثبت‌نام</Link>
+                  </Button>
+                </div>
+              )}
+
+              <Button asChild size="lg" variant="outline" className="mt-3 w-full">
                 <a
                   href={whatsappLink(whatsapp, orderMessage())}
                   target="_blank"
@@ -116,9 +210,10 @@ export function CartDrawer() {
                   onClick={() => closeCart()}
                 >
                   <MessageCircle className="size-4" />
-                  تکمیل سفارش در واتساپ
+                  سفارش در واتساپ
                 </a>
               </Button>
+
               <button
                 type="button"
                 onClick={clear}
