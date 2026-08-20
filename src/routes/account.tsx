@@ -55,7 +55,9 @@ function AccountPage() {
 }
 
 function AuthCard() {
-  const [mode, setMode] = useState<Mode>("signup");
+  const [mode, setMode] = useState<Mode>("login");
+  const [usePasswordLogin, setUsePasswordLogin] = useState(false);
+  const [verifyType, setVerifyType] = useState<"signup" | "email">("email");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [fullName, setFullName] = useState("");
@@ -75,6 +77,31 @@ function AuthCard() {
     setError(null);
     setInfo(null);
   };
+
+  const onSendCode = async (e: React.FormEvent) => {
+    e.preventDefault();
+    reset();
+    if (!email.trim()) {
+      setError("ایمیل خود را وارد کنید.");
+      return;
+    }
+    setBusy(true);
+    const { error: err } = await supabase.auth.signInWithOtp({
+      email: email.trim(),
+      options: { shouldCreateUser: true, emailRedirectTo: `${window.location.origin}/account` },
+    });
+    setBusy(false);
+    if (err) {
+      setError(message(err.message));
+      return;
+    }
+    setCode("");
+    setVerifyType("email");
+    setMode("verify");
+    setCooldown(45);
+    setInfo("کد ورود ۶ رقمی به ایمیل شما ارسال شد.");
+  };
+
 
   const onSignup = async (e: React.FormEvent) => {
     e.preventDefault();
