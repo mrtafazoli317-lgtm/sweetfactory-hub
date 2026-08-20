@@ -162,7 +162,47 @@ export function CartDrawer() {
                 <span className="text-lg font-bold text-foreground">{formatPrice(total)}</span>
               </div>
 
-              <Button asChild size="lg" className="mt-4 w-full">
+
+              {session ? (
+                <div className="mt-4 space-y-3 rounded-2xl border border-border bg-secondary/40 p-4">
+                  <p className="text-sm font-bold">ثبت سفارش در سایت</p>
+                  <div className="space-y-1.5">
+                    <Label htmlFor="cart-phone" className="text-xs">شماره تماس</Label>
+                    <Input
+                      id="cart-phone"
+                      dir="ltr"
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
+                      maxLength={20}
+                    />
+                  </div>
+                  <div className="space-y-1.5">
+                    <Label htmlFor="cart-address" className="text-xs">آدرس تحویل</Label>
+                    <Input
+                      id="cart-address"
+                      value={address}
+                      onChange={(e) => setAddress(e.target.value)}
+                      maxLength={300}
+                    />
+                  </div>
+                  {orderError ? <p className="text-xs text-destructive">{orderError}</p> : null}
+                  <Button size="lg" className="w-full" onClick={onPlaceOrder} disabled={placing}>
+                    {placing ? <Loader2 className="size-4 animate-spin" /> : null}
+                    ثبت سفارش
+                  </Button>
+                </div>
+              ) : (
+                <div className="mt-4 rounded-2xl border border-border bg-secondary/40 p-4 text-center">
+                  <p className="text-xs leading-6 text-muted-foreground">
+                    برای ثبت و پیگیری سفارش، وارد پنل کاربری شوید.
+                  </p>
+                  <Button asChild variant="secondary" className="mt-3 w-full" onClick={() => closeCart()}>
+                    <Link to="/account">ورود / ثبت‌نام</Link>
+                  </Button>
+                </div>
+              )}
+
+              <Button asChild size="lg" variant="outline" className="mt-3 w-full">
                 <a
                   href={whatsappLink(whatsapp, orderMessage())}
                   target="_blank"
@@ -170,9 +210,10 @@ export function CartDrawer() {
                   onClick={() => closeCart()}
                 >
                   <MessageCircle className="size-4" />
-                  تکمیل سفارش در واتساپ
+                  سفارش در واتساپ
                 </a>
               </Button>
+
               <button
                 type="button"
                 onClick={clear}
