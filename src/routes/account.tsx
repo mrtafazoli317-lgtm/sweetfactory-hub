@@ -267,10 +267,15 @@ function AuthCard() {
             <p className="mt-2 text-sm leading-7 text-muted-foreground">
               {mode === "signup"
                 ? "ایمیل و رمز عبور خود را وارد کنید؛ برای ورود اولیه یک کد تایید برایتان ارسال می‌شود."
-                : "با ایمیل و رمز عبور خود وارد شوید."}
+                : usePasswordLogin
+                  ? "با ایمیل و رمز عبور خود وارد شوید."
+                  : "ایمیل خود را وارد کنید؛ یک کد ۶ رقمی برایتان ارسال می‌شود و بدون رمز عبور وارد می‌شوید."}
             </p>
 
-            <form className="mt-6 space-y-4" onSubmit={mode === "signup" ? onSignup : onLogin}>
+            <form
+              className="mt-6 space-y-4"
+              onSubmit={mode === "signup" ? onSignup : usePasswordLogin ? onLogin : onSendCode}
+            >
               {mode === "signup" ? (
                 <div className="space-y-2">
                   <Label htmlFor="fullName">نام و نام خانوادگی</Label>
@@ -294,26 +299,41 @@ function AuthCard() {
                   onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
-              <div className="space-y-2">
-                <Label htmlFor="password">رمز عبور</Label>
-                <Input
-                  id="password"
-                  type="password"
-                  dir="ltr"
-                  required
-                  minLength={6}
-                  autoComplete={mode === "signup" ? "new-password" : "current-password"}
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-              </div>
+              {mode === "signup" || usePasswordLogin ? (
+                <div className="space-y-2">
+                  <Label htmlFor="password">رمز عبور</Label>
+                  <Input
+                    id="password"
+                    type="password"
+                    dir="ltr"
+                    required
+                    minLength={6}
+                    autoComplete={mode === "signup" ? "new-password" : "current-password"}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                </div>
+              ) : null}
               {error ? <p className="text-sm text-destructive">{error}</p> : null}
               {info ? <p className="text-sm text-accent">{info}</p> : null}
               <Button type="submit" className="w-full" disabled={busy}>
                 {busy ? <Loader2 className="size-4 animate-spin" /> : null}
-                {mode === "signup" ? "ثبت‌نام" : "ورود"}
+                {mode === "signup" ? "ثبت‌نام" : usePasswordLogin ? "ورود" : "ارسال کد ورود به ایمیل"}
               </Button>
             </form>
+
+            {mode === "login" ? (
+              <button
+                type="button"
+                className="mt-4 w-full text-center text-sm text-muted-foreground underline-offset-4 hover:underline"
+                onClick={() => {
+                  setUsePasswordLogin((v) => !v);
+                  reset();
+                }}
+              >
+                {usePasswordLogin ? "ورود با کد ایمیل (بدون رمز)" : "ورود با رمز عبور"}
+              </button>
+            ) : null}
 
             <p className="mt-5 text-center text-sm text-muted-foreground">
               {mode === "signup" ? "قبلاً ثبت‌نام کرده‌اید؟" : "حساب کاربری ندارید؟"}{" "}
@@ -328,6 +348,7 @@ function AuthCard() {
                 {mode === "signup" ? "ورود" : "ثبت‌نام"}
               </button>
             </p>
+
           </>
         )}
       </div>
