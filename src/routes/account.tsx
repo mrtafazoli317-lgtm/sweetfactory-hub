@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { KeyRound, Loader2, LogOut, MailCheck, ShieldCheck, User } from "lucide-react";
+import { KeyRound, Loader2, LogOut, MailCheck, Package, ShieldCheck, User } from "lucide-react";
 import { SiteLayout } from "@/components/site-layout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -9,6 +9,8 @@ import { Label } from "@/components/ui/label";
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/use-auth";
+import { myOrdersQuery, orderStatusLabel } from "@/lib/orders";
+import { formatDate, formatPrice } from "@/lib/format";
 
 export const Route = createFileRoute("/account")({
   head: () => ({
@@ -496,5 +498,69 @@ function Dashboard() {
         </div>
       </div>
     </section>
+  );
+}
+
+function OrdersCard({ userId }: { userId: string | undefined }) {
+  const { data: orders, isLoading } = useQuery(myOrdersQuery(userId));
+
+  return (
+    <div className="rounded-3xl border border-border bg-card p-7 shadow-soft">
+      <h2 className="flex items-center gap-2 text-lg">
+        <Package className="size-4 text-accent" />
+        سفارش‌های من
+      </h2>
+      <p className="mt-1 text-sm text-muted-foreground">فهرست سفارش‌های ثبت‌شده و وضعیت پیگیری آن‌ها.</p>
+
+      {isLoading ? (
+        <Loader2 className="mt-6 size-5 animate-spin text-accent" />
+      ) : !orders || orders.length === 0 ? (
+        <div className="mt-6 rounded-2xl border border-dashed border-border p-8 text-center">
+          <p className="text-sm text-muted-foreground">هنوز سفارشی ثبت نکرده‌اید.</p>
+          <Button asChild variant="secondary" className="mt-4">
+            <Link to="/products">مشاهده محصولات</Link>
+          </Button>
+        </div>
+      ) : (
+        <ul className="mt-6 space-y-4">
+          {orders.map((order) => (
+            <li key={order.id} className="rounded-2xl border border-border p-5">
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <div>
+                  <p className="text-sm font-bold">سفارش #{order.id.slice(0, 8)}</p>
+                  <p className="mt-1 text-xs text-muted-foreground">{formatDate(order.created_at)}</p>
+                </div>
+                <span className="rounded-full bg-secondary px-3 py-1 text-xs font-semibold text-secondary-foreground">
+                  {orderStatusLabel[order.status] ?? order.status}
+                </span>
+              </div>
+              <ul className="mt-4 space-y-2">
+                {order.order_items.map((item) => (
+                  <li key={item.id} className="flex items-center gap-3 text-sm">
+                    {item.image_url ? (
+                      <img
+                        src={item.image_url}
+                        alt={item.name}
+                        className="size-10 rounded-lg border border-border object-cover"
+                      />
+                    ) : null}
+                    <span className="flex-1">{item.name}</span>
+                    <span className="text-muted-foreground">× {item.quantity}</span>
+                    <span className="font-medium">{formatPrice(item.price * item.quantity)}</span>
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-4 flex items-center justify-between border-t border-border pt-3 text-sm">
+                <span className="text-muted-foreground">مبلغ کل</span>
+                <span className="font-bold">{formatPrice(order.total)}</span>
+              </div>
+              {order.address ? (
+                <p className="mt-2 text-xs leading-6 text-muted-foreground">آدرس: {order.address}</p>
+              ) : null}
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
   );
 }
