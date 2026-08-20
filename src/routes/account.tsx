@@ -124,6 +124,8 @@ function AuthCard() {
       window.location.reload();
       return;
     }
+    setCode("");
+    setVerifyType("signup");
     setMode("verify");
     setCooldown(45);
     setInfo("کد تایید ۶ رقمی به ایمیل شما ارسال شد.");
@@ -140,6 +142,8 @@ function AuthCard() {
     setBusy(false);
     if (err) {
       if (err.message.toLowerCase().includes("email not confirmed")) {
+        setCode("");
+        setVerifyType("signup");
         setMode("verify");
         setInfo("ایمیل شما تایید نشده است. کد تایید را وارد کنید یا ارسال مجدد بزنید.");
         return;
@@ -156,11 +160,20 @@ function AuthCard() {
       return;
     }
     setBusy(true);
-    const { error: err } = await supabase.auth.verifyOtp({
+    let { error: err } = await supabase.auth.verifyOtp({
       email: email.trim(),
       token: code,
-      type: "signup",
+      type: verifyType,
     });
+    if (err) {
+      // بعضی کدها با نوع دیگر صادر شده‌اند؛ حالت جایگزین را هم امتحان می‌کنیم.
+      const fallback = await supabase.auth.verifyOtp({
+        email: email.trim(),
+        token: code,
+        type: verifyType === "email" ? "signup" : "email",
+      });
+      err = fallback.error;
+    }
     setBusy(false);
     if (err) {
       setError(message(err.message));
@@ -172,11 +185,17 @@ function AuthCard() {
   const onResend = async () => {
     reset();
     setBusy(true);
-    const { error: err } = await supabase.auth.resend({
-      type: "signup",
-      email: email.trim(),
-      options: { emailRedirectTo: `${window.location.origin}/account` },
-    });
+    const { error: err } =
+      verifyType === "signup"
+        ? await supabase.auth.resend({
+            type: "signup",
+            email: email.trim(),
+            options: { emailRedirectTo: `${window.location.origin}/account` },
+          })
+        : await supabase.auth.signInWithOtp({
+            email: email.trim(),
+            options: { shouldCreateUser: true, emailRedirectTo: `${window.location.origin}/account` },
+          });
     setBusy(false);
     if (err) {
       setError(message(err.message));
@@ -185,6 +204,7 @@ function AuthCard() {
     setCooldown(45);
     setInfo("کد تایید دوباره ارسال شد.");
   };
+
 
   return (
     <section className="container-page flex min-h-[70vh] items-center justify-center py-16">
