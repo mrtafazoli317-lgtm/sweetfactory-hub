@@ -1,5 +1,7 @@
-import { useQuery } from "@tanstack/react-query";
-import { Minus, Plus, ShoppingBag, Trash2, MessageCircle } from "lucide-react";
+import { useState } from "react";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { Link } from "@tanstack/react-router";
+import { Minus, Plus, ShoppingBag, Trash2, MessageCircle, Loader2, CheckCircle2 } from "lucide-react";
 import {
   Sheet,
   SheetContent,
@@ -7,7 +9,11 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { useCart } from "@/hooks/use-cart";
+import { useAuth } from "@/hooks/use-auth";
+import { createOrder } from "@/lib/orders";
 import { contentMap, siteContentQuery, useContentValue } from "@/lib/data";
 import { formatPrice, whatsappLink } from "@/lib/format";
 
@@ -15,6 +21,41 @@ export function CartDrawer() {
   const { items, total, isOpen, closeCart, increment, decrement, removeItem, clear } = useCart();
   const { data } = useQuery(siteContentQuery);
   const whatsapp = useContentValue(contentMap(data), "contact_whatsapp");
+  const { session } = useAuth();
+  const queryClient = useQueryClient();
+  const [phone, setPhone] = useState("");
+  const [address, setAddress] = useState("");
+  const [placing, setPlacing] = useState(false);
+  const [placed, setPlaced] = useState(false);
+  const [orderError, setOrderError] = useState<string | null>(null);
+
+  const onPlaceOrder = async () => {
+    if (!session?.user) return;
+    if (!phone.trim() || !address.trim()) {
+      setOrderError("شماره تماس و آدرس را وارد کنید.");
+      return;
+    }
+    setPlacing(true);
+    setOrderError(null);
+    try {
+      await createOrder({
+        userId: session.user.id,
+        items,
+        total,
+        fullName: (session.user.user_metadata?.full_name as string) ?? "",
+        phone: phone.trim(),
+        address: address.trim(),
+      });
+      clear();
+      setPlaced(true);
+      void queryClient.invalidateQueries({ queryKey: ["orders"] });
+    } catch {
+      setOrderError("ثبت سفارش انجام نشد، دوباره تلاش کنید.");
+    } finally {
+      setPlacing(false);
+    }
+  };
+
 
   const orderMessage = () => {
     const lines = items.map(
