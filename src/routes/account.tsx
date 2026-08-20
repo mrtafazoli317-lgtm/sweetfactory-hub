@@ -466,6 +466,10 @@ function Dashboard() {
           )}
         </div>
 
+        <OrdersCard userId={userId} />
+
+
+
         <div className="rounded-3xl border border-border bg-card p-7 shadow-soft">
           <h2 className="flex items-center gap-2 text-lg">
             <KeyRound className="size-4 text-accent" />
