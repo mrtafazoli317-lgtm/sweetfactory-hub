@@ -1,8 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { ArrowLeft, BadgeCheck, Factory, Leaf, ShieldCheck, Truck } from "lucide-react";
+import { ArrowLeft, BadgeCheck, Cookie, Factory, Leaf, ShieldCheck, Truck } from "lucide-react";
 import { SiteLayout } from "@/components/site-layout";
+import { PastryDivider, PastryMarquee, PastrySprinkles } from "@/components/pastry-decor";
 import { Reveal } from "@/components/reveal";
+
 import { ProductCard } from "@/components/product-card";
 import { PostCard } from "@/components/post-card";
 import { Button } from "@/components/ui/button";
