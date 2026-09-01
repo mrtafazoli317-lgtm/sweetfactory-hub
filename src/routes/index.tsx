@@ -118,19 +118,24 @@ function HomePage() {
         </div>
       </section>
 
+      {/* BRAND STRIP */}
+      <PastryMarquee
+        items={["کلوچه سنتی", "شیرینی آردی", "آرد بسته‌بندی", "جعبه هدیه", "کنترل کیفیت", "ارسال سراسری"]}
+      />
+
       {/* STATS */}
-      <section className="border-b border-border bg-card">
-        <div className="container-page grid grid-cols-2 gap-6 py-10 md:grid-cols-4">
+      <section className="relative overflow-hidden border-b border-border bg-card">
+        <div className="pattern-crumbs pointer-events-none absolute inset-0 opacity-40" />
+        <div className="container-page relative grid grid-cols-1 gap-6 py-12 sm:grid-cols-3">
           {[
-            { value: useContentValue(map, "stat_years"), label: "سال تجربه تولید" },
             { value: useContentValue(map, "stat_products"), label: "تنوع محصول" },
             { value: useContentValue(map, "stat_clients"), label: "مشتری عمده" },
             { value: useContentValue(map, "stat_cities"), label: "شهر تحت پوشش" },
           ].map((stat, i) => (
             <Reveal key={stat.label} delay={i * 80}>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-gradient-gold md:text-4xl">{stat.value}</div>
-                <div className="mt-1 text-xs text-muted-foreground md:text-sm">{stat.label}</div>
+              <div className="card-glass rounded-2xl px-6 py-7 text-center">
+                <div className="text-4xl font-bold text-gradient-gold">{stat.value}</div>
+                <div className="mt-2 text-xs text-muted-foreground md:text-sm">{stat.label}</div>
               </div>
             </Reveal>
           ))}
@@ -138,15 +143,22 @@ function HomePage() {
       </section>
 
       {/* CATEGORIES */}
-      <section className="container-page py-20">
+      <section className="container-page relative py-20">
+        <PastrySprinkles />
         <Reveal>
-          <div className="mb-10 text-center">
-            <h2 className="text-3xl md:text-4xl">دسته‌بندی محصولات</h2>
+          <div className="relative mb-10 text-center">
+            <span className="eyebrow">
+              <Cookie className="size-3.5" />
+              خانواده محصولات ۲۰کام
+            </span>
+            <h2 className="mt-4 text-3xl md:text-4xl">دسته‌بندی محصولات</h2>
             <p className="mx-auto mt-3 max-w-xl text-sm leading-8 text-muted-foreground">
               چهار خانواده محصول ۲۰کام؛ از کلوچه‌های نرم تا آرد بسته‌بندی و باکس‌های هدیه.
             </p>
+            <PastryDivider className="mt-5" />
           </div>
         </Reveal>
+
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {(categories ?? []).map((category, i) => (
             <Reveal key={category.id} delay={i * 80}>
