@@ -230,21 +230,25 @@ function HomePage() {
       </section>
 
       {/* ABOUT */}
-      <section className="container-page py-20">
-        <div className="grid items-center gap-10 lg:grid-cols-2">
+      <section className="container-page relative py-20">
+        <PastrySprinkles />
+        <div className="relative grid items-center gap-10 lg:grid-cols-2">
           <Reveal>
-            <div className="overflow-hidden rounded-3xl shadow-lift">
+            <div className="relative overflow-hidden rounded-3xl shadow-lift">
               <img
                 src={useContentValue(map, "about_image") || "/images/factory-line.jpg"}
                 alt="خط تولید کارخانه ۲۰کام"
                 loading="lazy"
                 className="aspect-[4/3] w-full object-cover"
               />
+              <div className="pattern-crumbs pointer-events-none absolute inset-0 opacity-20" />
             </div>
           </Reveal>
           <Reveal delay={120}>
             <div>
-              <h2 className="text-3xl md:text-4xl">{useContentValue(map, "about_title")}</h2>
+              <span className="eyebrow">درباره ما</span>
+              <h2 className="mt-4 text-3xl md:text-4xl">{useContentValue(map, "about_title")}</h2>
+
               <p className="mt-5 text-sm leading-9 text-muted-foreground md:text-base">
                 {useContentValue(map, "about_text")}
               </p>
