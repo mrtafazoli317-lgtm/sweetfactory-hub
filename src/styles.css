@@ -187,3 +187,58 @@
 @utility animate-slow-zoom {
   animation: slow-zoom 12s ease-out forwards;
 }
+
+/* ---------- Decorative / modern UI utilities ---------- */
+@keyframes float-soft {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-14px) rotate(6deg); }
+}
+
+@utility animate-float-soft {
+  animation: float-soft 7s ease-in-out infinite;
+}
+
+@keyframes marquee-rtl {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@utility animate-marquee {
+  animation: marquee-rtl 28s linear infinite;
+}
+
+@utility pattern-crumbs {
+  background-image: radial-gradient(
+    color-mix(in oklab, var(--gold) 45%, transparent) 1.5px,
+    transparent 1.6px
+  );
+  background-size: 22px 22px;
+}
+
+@utility glow-gold {
+  background-image: radial-gradient(
+    closest-side,
+    color-mix(in oklab, var(--gold) 38%, transparent),
+    transparent
+  );
+}
+
+@utility card-glass {
+  background-color: color-mix(in oklab, var(--card) 78%, transparent);
+  backdrop-filter: blur(14px);
+  border: 1px solid color-mix(in oklab, var(--gold) 22%, transparent);
+  box-shadow: var(--shadow-soft);
+}
+
+@utility eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  border: 1px solid color-mix(in oklab, var(--gold) 35%, transparent);
+  background-color: color-mix(in oklab, var(--gold) 12%, transparent);
+  padding: 0.35rem 0.9rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: color-mix(in oklab, var(--espresso) 82%, var(--gold));
+}

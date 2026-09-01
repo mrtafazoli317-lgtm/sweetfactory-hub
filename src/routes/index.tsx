@@ -1,8 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { ArrowLeft, BadgeCheck, Factory, Leaf, ShieldCheck, Truck } from "lucide-react";
+import { ArrowLeft, BadgeCheck, Cookie, Factory, Leaf, ShieldCheck, Truck } from "lucide-react";
 import { SiteLayout } from "@/components/site-layout";
+import { PastryDivider, PastryMarquee, PastrySprinkles } from "@/components/pastry-decor";
 import { Reveal } from "@/components/reveal";
+
 import { ProductCard } from "@/components/product-card";
 import { PostCard } from "@/components/post-card";
 import { Button } from "@/components/ui/button";
@@ -118,19 +120,24 @@ function HomePage() {
         </div>
       </section>
 
+      {/* BRAND STRIP */}
+      <PastryMarquee
+        items={["کلوچه سنتی", "شیرینی آردی", "آرد بسته‌بندی", "جعبه هدیه", "کنترل کیفیت", "ارسال سراسری"]}
+      />
+
       {/* STATS */}
-      <section className="border-b border-border bg-card">
-        <div className="container-page grid grid-cols-2 gap-6 py-10 md:grid-cols-4">
+      <section className="relative overflow-hidden border-b border-border bg-card">
+        <div className="pattern-crumbs pointer-events-none absolute inset-0 opacity-40" />
+        <div className="container-page relative grid grid-cols-1 gap-6 py-12 sm:grid-cols-3">
           {[
-            { value: useContentValue(map, "stat_years"), label: "سال تجربه تولید" },
             { value: useContentValue(map, "stat_products"), label: "تنوع محصول" },
             { value: useContentValue(map, "stat_clients"), label: "مشتری عمده" },
             { value: useContentValue(map, "stat_cities"), label: "شهر تحت پوشش" },
           ].map((stat, i) => (
             <Reveal key={stat.label} delay={i * 80}>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-gradient-gold md:text-4xl">{stat.value}</div>
-                <div className="mt-1 text-xs text-muted-foreground md:text-sm">{stat.label}</div>
+              <div className="card-glass rounded-2xl px-6 py-7 text-center">
+                <div className="text-4xl font-bold text-gradient-gold">{stat.value}</div>
+                <div className="mt-2 text-xs text-muted-foreground md:text-sm">{stat.label}</div>
               </div>
             </Reveal>
           ))}
@@ -138,15 +145,22 @@ function HomePage() {
       </section>
 
       {/* CATEGORIES */}
-      <section className="container-page py-20">
+      <section className="container-page relative py-20">
+        <PastrySprinkles />
         <Reveal>
-          <div className="mb-10 text-center">
-            <h2 className="text-3xl md:text-4xl">دسته‌بندی محصولات</h2>
+          <div className="relative mb-10 text-center">
+            <span className="eyebrow">
+              <Cookie className="size-3.5" />
+              خانواده محصولات ۲۰کام
+            </span>
+            <h2 className="mt-4 text-3xl md:text-4xl">دسته‌بندی محصولات</h2>
             <p className="mx-auto mt-3 max-w-xl text-sm leading-8 text-muted-foreground">
               چهار خانواده محصول ۲۰کام؛ از کلوچه‌های نرم تا آرد بسته‌بندی و باکس‌های هدیه.
             </p>
+            <PastryDivider className="mt-5" />
           </div>
         </Reveal>
+
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {(categories ?? []).map((category, i) => (
             <Reveal key={category.id} delay={i * 80}>
@@ -189,12 +203,14 @@ function HomePage() {
       </section>
 
       {/* FEATURED PRODUCTS */}
-      <section className="bg-secondary/40 py-20">
-        <div className="container-page">
+      <section className="relative overflow-hidden bg-secondary/40 py-20">
+        <div className="glow-gold pointer-events-none absolute -top-24 right-0 size-96 opacity-60" />
+        <div className="container-page relative">
           <Reveal>
             <div className="mb-10 flex flex-wrap items-end justify-between gap-4">
               <div>
-                <h2 className="text-3xl md:text-4xl">محصولات منتخب</h2>
+                <span className="eyebrow">منتخب کارخانه</span>
+                <h2 className="mt-4 text-3xl md:text-4xl">محصولات منتخب</h2>
                 <p className="mt-3 text-sm text-muted-foreground">پرفروش‌ترین محصولات کارخانه ۲۰کام</p>
               </div>
               <Button asChild variant="outline">
@@ -202,6 +218,7 @@ function HomePage() {
               </Button>
             </div>
           </Reveal>
+
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {featured.map((product, i) => (
               <Reveal key={product.id} delay={i * 80}>
@@ -213,21 +230,25 @@ function HomePage() {
       </section>
 
       {/* ABOUT */}
-      <section className="container-page py-20">
-        <div className="grid items-center gap-10 lg:grid-cols-2">
+      <section className="container-page relative py-20">
+        <PastrySprinkles />
+        <div className="relative grid items-center gap-10 lg:grid-cols-2">
           <Reveal>
-            <div className="overflow-hidden rounded-3xl shadow-lift">
+            <div className="relative overflow-hidden rounded-3xl shadow-lift">
               <img
                 src={useContentValue(map, "about_image") || "/images/factory-line.jpg"}
                 alt="خط تولید کارخانه ۲۰کام"
                 loading="lazy"
                 className="aspect-[4/3] w-full object-cover"
               />
+              <div className="pattern-crumbs pointer-events-none absolute inset-0 opacity-20" />
             </div>
           </Reveal>
           <Reveal delay={120}>
             <div>
-              <h2 className="text-3xl md:text-4xl">{useContentValue(map, "about_title")}</h2>
+              <span className="eyebrow">درباره ما</span>
+              <h2 className="mt-4 text-3xl md:text-4xl">{useContentValue(map, "about_title")}</h2>
+
               <p className="mt-5 text-sm leading-9 text-muted-foreground md:text-base">
                 {useContentValue(map, "about_text")}
               </p>
