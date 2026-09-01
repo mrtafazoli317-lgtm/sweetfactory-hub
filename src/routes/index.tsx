@@ -203,12 +203,14 @@ function HomePage() {
       </section>
 
       {/* FEATURED PRODUCTS */}
-      <section className="bg-secondary/40 py-20">
-        <div className="container-page">
+      <section className="relative overflow-hidden bg-secondary/40 py-20">
+        <div className="glow-gold pointer-events-none absolute -top-24 right-0 size-96 opacity-60" />
+        <div className="container-page relative">
           <Reveal>
             <div className="mb-10 flex flex-wrap items-end justify-between gap-4">
               <div>
-                <h2 className="text-3xl md:text-4xl">محصولات منتخب</h2>
+                <span className="eyebrow">منتخب کارخانه</span>
+                <h2 className="mt-4 text-3xl md:text-4xl">محصولات منتخب</h2>
                 <p className="mt-3 text-sm text-muted-foreground">پرفروش‌ترین محصولات کارخانه ۲۰کام</p>
               </div>
               <Button asChild variant="outline">
@@ -216,6 +218,7 @@ function HomePage() {
               </Button>
             </div>
           </Reveal>
+
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {featured.map((product, i) => (
               <Reveal key={product.id} delay={i * 80}>
