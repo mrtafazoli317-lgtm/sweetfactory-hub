@@ -42,7 +42,7 @@ export function CartDrawer() {
         userId: session.user.id,
         items,
         total,
-        fullName: (session.user.user_metadata?.full_name as string) ?? "",
+        fullName: (session.user.user_metadata?.['full_name'] as string) ?? "",
         phone: phone.trim(),
         address: address.trim(),
       });
