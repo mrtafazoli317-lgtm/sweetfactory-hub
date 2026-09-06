@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
+import { FloatingContact } from "@/components/floating-contact";
 
 export function SiteLayout({ children }: { children: ReactNode }) {
   return (
@@ -8,6 +9,7 @@ export function SiteLayout({ children }: { children: ReactNode }) {
       <SiteHeader />
       <main className="flex-1">{children}</main>
       <SiteFooter />
+      <FloatingContact />
     </div>
   );
 }

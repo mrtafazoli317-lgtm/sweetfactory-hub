@@ -101,7 +101,7 @@ export const FALLBACK_CONTENT: Record<string, string> = {
   brand_name: "۲۰کام",
   brand_tagline: "کارخانه کلوچه و شیرینی سنتی",
   hero_title: "طعم اصیل سنتی، با کیفیت صنعتی",
-  hero_subtitle: "بیش از ده سال تجربه در تولید کلوچه، شیرینی آردی و آرد بسته‌بندی",
+  hero_subtitle: "تولید کلوچه، شیرینی آردی و آرد بسته‌بندی با بالاترین استانداردهای کیفی",
   hero_image: "/images/hero.jpg",
   about_title: "درباره کارخانه ۲۰کام",
   about_text: "",
