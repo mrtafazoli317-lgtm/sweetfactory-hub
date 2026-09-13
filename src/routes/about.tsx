@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { Award, Factory, Leaf, ShieldCheck } from "lucide-react";
+import { Factory, Leaf, ShieldCheck, Truck } from "lucide-react";
 import { SiteLayout } from "@/components/site-layout";
 import { Reveal } from "@/components/reveal";
 import { Button } from "@/components/ui/button";
@@ -28,10 +28,10 @@ export const Route = createFileRoute("/about")({
 });
 
 const values = [
-  { icon: ShieldCheck, title: "کیفیت بالا", text: "کنترل کیفیت هر بچ تولید در آزمایشگاه داخلی" },
-  { icon: Leaf, title: "مواد اولیه مرغوب", text: "آرد، خرما، گردو و روغن با گواهی آنالیز" },
-  { icon: Factory, title: "بسته‌بندی استاندارد", text: "بسته‌بندی اتوماتیک، فلزیاب و تاریخ تولید" },
-  { icon: Award, title: "تولید تازه روزانه", text: "برنامه تولید روزانه و ارسال سریع به بازار" },
+  { icon: ShieldCheck, title: "کنترل کیفیت مستمر", text: "در آزمایشگاه ۲۰کام" },
+  { icon: Leaf, title: "مواد اولیه درجه یک", text: "آرد گندم مرغوب" },
+  { icon: Factory, title: "خط تولید مدرن", text: "با پیشرفته‌ترین دستگاه‌های روز" },
+  { icon: Truck, title: "ارسال به سراسر کشور", text: "" },
 ];
 
 function AboutPage() {
@@ -64,7 +64,7 @@ function AboutPage() {
         </Reveal>
         <Reveal delay={120}>
           <div>
-            <h2 className="text-2xl md:text-3xl">داستان کارخانه</h2>
+            <h2 className="text-2xl md:text-3xl">شروع فعالیت با تکیه بر تجربه و کیفیت</h2>
             <p className="mt-5 text-sm leading-9 text-muted-foreground md:text-base">
               {useContentValue(map, "about_text")}
             </p>
