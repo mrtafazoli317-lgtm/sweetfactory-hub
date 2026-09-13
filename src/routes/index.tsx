@@ -1,8 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { ArrowLeft, BadgeCheck, Cookie, Factory, Leaf, ShieldCheck, Truck } from "lucide-react";
+import { ArrowLeft, BadgeCheck, Factory, Leaf, ShieldCheck, Truck } from "lucide-react";
 import { SiteLayout } from "@/components/site-layout";
-import { PastryDivider, PastryMarquee, PastrySprinkles } from "@/components/pastry-decor";
+import { PastryMarquee, PastrySprinkles } from "@/components/pastry-decor";
 import { Reveal } from "@/components/reveal";
 
 import { ProductCard } from "@/components/product-card";
@@ -41,10 +41,10 @@ export const Route = createFileRoute("/")({
 });
 
 const trustItems = [
-  { icon: ShieldCheck, title: "کنترل کیفیت مستمر", text: "پایش هر بچ تولید در آزمایشگاه داخلی کارخانه" },
-  { icon: Leaf, title: "مواد اولیه درجه یک", text: "آرد، خرما، گردو و روغن با گواهی آنالیز" },
-  { icon: Factory, title: "خط تولید مدرن", text: "فر تونلی، بسته‌بندی اتوماتیک و فلزیاب" },
-  { icon: Truck, title: "ارسال به سراسر کشور", text: "همکاری با باربری‌های طرف قرارداد" },
+  { icon: ShieldCheck, title: "کنترل کیفیت مستمر", text: "در آزمایشگاه ۲۰کام" },
+  { icon: Leaf, title: "مواد اولیه درجه یک", text: "با استفاده از آرد گندم مرغوب" },
+  { icon: Factory, title: "خط تولید مدرن", text: "با پیشرفته‌ترین دستگاه‌های روز" },
+  { icon: Truck, title: "ارسال به سراسر کشور", text: "" },
 ];
 
 function HomePage() {
@@ -67,9 +67,6 @@ function HomePage() {
     const match = (products ?? []).find((p) => p.category_id === categoryId && p.image_url);
     return match?.image_url || "/images/hero.jpg";
   };
-  const categoryCount = (categoryId: string) =>
-    (products ?? []).filter((p) => p.category_id === categoryId && p.is_active).length;
-
   return (
     <SiteLayout>
       {/* HERO */}
@@ -149,15 +146,7 @@ function HomePage() {
         <PastrySprinkles />
         <Reveal>
           <div className="relative mb-10 text-center">
-            <span className="eyebrow">
-              <Cookie className="size-3.5" />
-              خانواده محصولات ۲۰کام
-            </span>
-            <h2 className="mt-4 text-3xl md:text-4xl">دسته‌بندی محصولات</h2>
-            <p className="mx-auto mt-3 max-w-xl text-sm leading-8 text-muted-foreground">
-              چهار خانواده محصول ۲۰کام؛ از کلوچه‌های نرم تا آرد بسته‌بندی و باکس‌های هدیه.
-            </p>
-            <PastryDivider className="mt-5" />
+            <h2 className="text-3xl md:text-4xl">دسته‌بندی محصولات ۲۰کام</h2>
           </div>
         </Reveal>
 
@@ -175,16 +164,6 @@ function HomePage() {
                   className="absolute inset-0 size-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-espresso via-espresso/55 to-espresso/10 transition-colors duration-500 group-hover:from-espresso/95" />
-
-                <span className="absolute top-5 right-5 flex size-11 items-center justify-center rounded-xl border border-gold/30 bg-espresso/50 text-lg font-bold text-gold backdrop-blur">
-                  {category.name.slice(0, 1)}
-                </span>
-
-                {categoryCount(category.id) > 0 ? (
-                  <span className="absolute top-5 left-5 rounded-full border border-cream/20 bg-espresso/50 px-3 py-1 text-[11px] font-medium text-cream backdrop-blur">
-                    {categoryCount(category.id)} محصول
-                  </span>
-                ) : null}
 
                 <div className="relative z-10 p-6">
                   <h3 className="text-lg font-bold text-cream">{category.name}</h3>
@@ -226,6 +205,11 @@ function HomePage() {
               </Reveal>
             ))}
           </div>
+          <Reveal>
+            <p className="mx-auto mt-12 max-w-4xl text-center text-2xl font-bold leading-[1.8] text-foreground md:text-4xl">
+              ۲۰کام از دل کارخانه آرد مینایی در استان مرکزی، یکی از معتبرترین کارخانه‌های آرد ایران، متولد شد
+            </p>
+          </Reveal>
         </div>
       </section>
 
@@ -258,7 +242,7 @@ function HomePage() {
                     <item.icon className="mt-0.5 size-5 shrink-0 text-accent" />
                     <div>
                       <div className="text-sm font-bold">{item.title}</div>
-                      <div className="mt-1 text-xs leading-6 text-muted-foreground">{item.text}</div>
+                      {item.text ? <div className="mt-1 text-xs leading-6 text-muted-foreground">{item.text}</div> : null}
                     </div>
                   </div>
                 ))}

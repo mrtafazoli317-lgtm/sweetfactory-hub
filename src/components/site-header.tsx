@@ -28,7 +28,7 @@ export function SiteHeader() {
     <header className="sticky top-0 z-50 border-b border-border/60 bg-background/85 backdrop-blur-lg">
       <div className="container-page flex h-18 items-center justify-between gap-4 py-3">
         <Link to="/" className="flex items-center leading-tight">
-          <span className="text-gradient-gold text-xl font-bold tracking-[0.25em]">
+          <span className="text-xl font-black tracking-[0.25em] text-brand-yellow drop-shadow-sm">
             20 K A M
           </span>
         </Link>
@@ -62,7 +62,7 @@ export function SiteHeader() {
               </span>
             ) : null}
           </button>
-          <Button asChild size="sm" className="hidden sm:inline-flex">
+          <Button asChild size="sm" className="hidden bg-whatsapp text-whatsapp-foreground hover:bg-whatsapp/90 sm:inline-flex">
             <a href={whatsappLink(whatsapp, "سلام، برای سفارش محصولات ۲۰کام تماس گرفتم.")} target="_blank" rel="noreferrer">
               <MessageCircle className="size-4" />
               سفارش در واتساپ
