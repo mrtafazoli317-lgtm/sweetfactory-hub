@@ -15,13 +15,13 @@ import { formatDate, formatPrice } from "@/lib/format";
 export const Route = createFileRoute("/account")({
   head: () => ({
     meta: [
-      { title: "پنل کاربری | ۲۰کام" },
+      { title: "پنل کاربری | بیست کام" },
       {
         name: "description",
-        content: "ثبت‌نام و ورود به پنل کاربری ۲۰کام؛ تایید ایمیل با کد یکبار مصرف و مدیریت اطلاعات حساب.",
+        content: "ثبت‌نام و ورود به پنل کاربری بیست کام؛ تایید ایمیل با کد یکبار مصرف و مدیریت اطلاعات حساب.",
       },
-      { property: "og:title", content: "پنل کاربری ۲۰کام" },
-      { property: "og:description", content: "ساخت حساب کاربری، تایید ایمیل با کد و مدیریت پروفایل در سایت ۲۰کام." },
+      { property: "og:title", content: "پنل کاربری بیست کام" },
+      { property: "og:description", content: "ساخت حساب کاربری، تایید ایمیل با کد و مدیریت پروفایل در سایت بیست کام." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -422,7 +422,7 @@ function Dashboard() {
         <div className="flex flex-wrap items-center justify-between gap-4 rounded-3xl border border-border bg-card p-7 shadow-soft">
           <div>
             <p className="text-sm text-muted-foreground">خوش آمدید</p>
-            <h1 className="mt-1 text-2xl">{profile?.full_name || "کاربر ۲۰کام"}</h1>
+            <h1 className="mt-1 text-2xl">{profile?.full_name || "کاربر بیست کام"}</h1>
             <p dir="ltr" className="mt-1 text-sm text-muted-foreground">{session?.user?.email}</p>
           </div>
           <div className="flex gap-2">

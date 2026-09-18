@@ -20,6 +20,8 @@ export function PostCard({
           src={post.cover_image || "/images/blog-koloche.jpg"}
           alt={post.title}
           loading="lazy"
+          width={1280}
+          height={853}
           className="size-full object-cover transition-transform duration-700 group-hover:scale-105"
         />
       </div>

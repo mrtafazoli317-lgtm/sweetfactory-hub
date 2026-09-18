@@ -12,13 +12,13 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/blog/")({
   head: () => ({
     meta: [
-      { title: "مجله ۲۰کام | دانستنی‌های تولید کلوچه، آرد و شیرینی سنتی" },
+      { title: "مجله بیست کام | دانستنی‌های تولید کلوچه، آرد و شیرینی سنتی" },
       {
         name: "description",
         content:
-          "مقالات تخصصی کارخانه ۲۰کام درباره تولید کلوچه، انتخاب آرد، کنترل کیفیت و بسته‌بندی شیرینی سنتی.",
+          "مقالات تخصصی کارخانه بیست کام درباره تولید کلوچه، انتخاب آرد، کنترل کیفیت و بسته‌بندی شیرینی سنتی.",
       },
-      { property: "og:title", content: "مجله ۲۰کام" },
+      { property: "og:title", content: "مجله بیست کام" },
       { property: "og:description", content: "مقالات تخصصی درباره تولید و کیفیت محصولات آردی." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -49,7 +49,7 @@ function BlogPage() {
     <SiteLayout>
       <section className="surface-dark py-16">
         <div className="container-page">
-          <h1 className="text-3xl text-cream md:text-4xl">مجله ۲۰کام</h1>
+          <h1 className="text-3xl text-cream md:text-4xl">مجله بیست کام</h1>
           <p className="mt-4 max-w-2xl text-sm leading-8 text-cream/75">
             تجربه‌های کارخانه‌ای، دانش فنی تولید و نکات کاربردی درباره محصولات آردی.
           </p>

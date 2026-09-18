@@ -62,7 +62,7 @@ export function CartDrawer() {
       (item) => `- ${item.name} × ${item.quantity} = ${formatPrice(item.price * item.quantity)}`,
     );
     return [
-      "سلام، می‌خوام سفارش زیر رو از ۲۰کام ثبت کنم:",
+      "سلام، می‌خوام سفارش زیر رو از بیست کام ثبت کنم:",
       "",
       ...lines,
       "",

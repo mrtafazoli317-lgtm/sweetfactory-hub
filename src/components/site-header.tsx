@@ -63,7 +63,7 @@ export function SiteHeader() {
             ) : null}
           </button>
           <Button asChild size="sm" className="hidden bg-whatsapp text-whatsapp-foreground hover:bg-whatsapp/90 sm:inline-flex">
-            <a href={whatsappLink(whatsapp, "سلام، برای سفارش محصولات ۲۰کام تماس گرفتم.")} target="_blank" rel="noreferrer">
+            <a href={whatsappLink(whatsapp, "سلام، برای سفارش محصولات بیست کام تماس گرفتم.")} target="_blank" rel="noreferrer">
               <MessageCircle className="size-4" />
               سفارش در واتساپ
             </a>

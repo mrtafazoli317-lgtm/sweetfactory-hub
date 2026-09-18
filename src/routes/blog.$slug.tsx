@@ -10,12 +10,12 @@ import { formatDate } from "@/lib/format";
 export const Route = createFileRoute("/blog/$slug")({
   head: ({ params }) => ({
     meta: [
-      { title: `مقاله ${params.slug} | مجله ۲۰کام` },
+      { title: `مقاله ${params.slug} | مجله بیست کام` },
       {
         name: "description",
-        content: "مقاله تخصصی مجله ۲۰کام درباره تولید، کیفیت و صنعت محصولات آردی.",
+        content: "مقاله تخصصی مجله بیست کام درباره تولید، کیفیت و صنعت محصولات آردی.",
       },
-      { property: "og:title", content: "مجله ۲۰کام" },
+      { property: "og:title", content: "مجله بیست کام" },
       { property: "og:description", content: "مقاله تخصصی درباره تولید و کیفیت محصولات آردی." },
       { property: "og:type", content: "article" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -87,6 +87,8 @@ function PostDetail() {
             <img
               src={post.cover_image}
               alt={post.title}
+              width={1280}
+              height={853}
               className="aspect-[3/2] w-full object-cover"
             />
           </div>

@@ -22,13 +22,13 @@ import { whatsappLink } from "@/lib/format";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "۲۰کام | کارخانه تولید کلوچه، شیرینی آردی و آرد بسته‌بندی" },
+      { title: "بیست کام | کارخانه تولید کلوچه، شیرینی آردی و آرد بسته‌بندی" },
       {
         name: "description",
         content:
-          "کارخانه ۲۰کام، تولیدکننده کلوچه، شیرینی سنتی آردی، آرد بسته‌بندی ۹۰۰ گرمی و جعبه هدیه در اراک با کنترل کیفیت کارخانه‌ای.",
+          "کارخانه بیست کام، تولیدکننده کلوچه، شیرینی سنتی آردی، آرد بسته‌بندی ۹۰۰ گرمی و جعبه هدیه در اراک با کنترل کیفیت کارخانه‌ای.",
       },
-      { property: "og:title", content: "۲۰کام | کارخانه کلوچه و شیرینی سنتی" },
+      { property: "og:title", content: "بیست کام | کارخانه کلوچه و شیرینی سنتی" },
       {
         property: "og:description",
         content: "تولید کلوچه، شیرینی آردی و آرد بسته‌بندی با استانداردهای کیفی کارخانه‌ای.",
@@ -41,7 +41,7 @@ export const Route = createFileRoute("/")({
 });
 
 const trustItems = [
-  { icon: ShieldCheck, title: "کنترل کیفیت مستمر", text: "در آزمایشگاه ۲۰کام" },
+  { icon: ShieldCheck, title: "کنترل کیفیت مستمر", text: "در آزمایشگاه بیست کام" },
   { icon: Leaf, title: "مواد اولیه درجه یک", text: "با استفاده از آرد گندم مرغوب" },
   { icon: Factory, title: "خط تولید مدرن", text: "با پیشرفته‌ترین دستگاه‌های روز" },
   { icon: Truck, title: "ارسال به سراسر کشور", text: "" },
@@ -74,7 +74,7 @@ function HomePage() {
         <div className="absolute inset-0">
           <img
             src={heroImage || "/images/hero.jpg"}
-            alt="محصولات کارخانه ۲۰کام"
+            alt="محصولات کارخانه بیست کام"
             width={1600}
             height={1000}
             className="animate-slow-zoom size-full object-cover"
@@ -146,7 +146,7 @@ function HomePage() {
         <PastrySprinkles />
         <Reveal>
           <div className="relative mb-10 text-center">
-            <h2 className="text-3xl md:text-4xl">دسته‌بندی محصولات ۲۰کام</h2>
+            <h2 className="text-3xl md:text-4xl">دسته‌بندی محصولات بیست کام</h2>
           </div>
         </Reveal>
 
@@ -190,7 +190,7 @@ function HomePage() {
               <div>
                 <span className="eyebrow">منتخب کارخانه</span>
                 <h2 className="mt-4 text-3xl md:text-4xl">محصولات منتخب</h2>
-                <p className="mt-3 text-sm text-muted-foreground">پرفروش‌ترین محصولات کارخانه ۲۰کام</p>
+                <p className="mt-3 text-sm text-muted-foreground">پرفروش‌ترین محصولات کارخانه بیست کام</p>
               </div>
               <Button asChild variant="outline">
                 <Link to="/products">همه محصولات</Link>
@@ -207,7 +207,7 @@ function HomePage() {
           </div>
           <Reveal>
             <p className="mx-auto mt-12 max-w-4xl text-center text-2xl font-bold leading-[1.8] text-foreground md:text-4xl">
-              ۲۰کام از دل کارخانه آرد مینایی در استان مرکزی، یکی از معتبرترین کارخانه‌های آرد ایران، متولد شد
+              بیست کام از دل کارخانه آرد مینایی در استان مرکزی، یکی از معتبرترین کارخانه‌های آرد ایران، متولد شد
             </p>
           </Reveal>
         </div>
@@ -221,7 +221,7 @@ function HomePage() {
             <div className="relative overflow-hidden rounded-3xl shadow-lift">
               <img
                 src={useContentValue(map, "about_image") || "/images/factory-line.jpg"}
-                alt="خط تولید کارخانه ۲۰کام"
+                alt="خط تولید کارخانه بیست کام"
                 loading="lazy"
                 className="aspect-[4/3] w-full object-cover"
               />
@@ -264,7 +264,7 @@ function HomePage() {
           <Reveal>
             <div className="mb-10 flex flex-wrap items-end justify-between gap-4">
               <div>
-                <h2 className="text-3xl md:text-4xl">مجله ۲۰کام</h2>
+                <h2 className="text-3xl md:text-4xl">مجله بیست کام</h2>
                 <p className="mt-3 text-sm text-muted-foreground">
                   دانستنی‌های تولید، کیفیت و صنعت شیرینی
                 </p>
@@ -295,7 +295,7 @@ function HomePage() {
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-3">
               <Button asChild size="lg">
-                <a href={whatsappLink(whatsapp, "سلام، درخواست لیست قیمت ۲۰کام را دارم.")} target="_blank" rel="noreferrer">
+                <a href={whatsappLink(whatsapp, "سلام، درخواست لیست قیمت بیست کام را دارم.")} target="_blank" rel="noreferrer">
                   گفتگو در واتساپ
                 </a>
               </Button>

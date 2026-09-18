@@ -27,7 +27,7 @@ function AdminDashboard() {
     <div className="space-y-8">
       <div>
         <h1 className="text-2xl md:text-3xl">داشبورد مدیریت</h1>
-        <p className="mt-2 text-sm text-muted-foreground">مدیریت محصولات، مجله و محتوای سایت ۲۰کام</p>
+        <p className="mt-2 text-sm text-muted-foreground">مدیریت محصولات، مجله و محتوای سایت بیست کام</p>
       </div>
 
       <div className="grid gap-4 sm:grid-cols-3">

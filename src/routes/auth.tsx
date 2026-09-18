@@ -11,10 +11,10 @@ import { useAuth } from "@/hooks/use-auth";
 export const Route = createFileRoute("/auth")({
   head: () => ({
     meta: [
-      { title: "ورود مدیریت | ۲۰کام" },
-      { name: "description", content: "ورود مدیران کارخانه ۲۰کام به پنل مدیریت محتوا و محصولات." },
-      { property: "og:title", content: "ورود مدیریت ۲۰کام" },
-      { property: "og:description", content: "دسترسی مدیران به پنل مدیریت سایت ۲۰کام." },
+      { title: "ورود مدیریت | بیست کام" },
+      { name: "description", content: "ورود مدیران کارخانه بیست کام به پنل مدیریت محتوا و محصولات." },
+      { property: "og:title", content: "ورود مدیریت بیست کام" },
+      { property: "og:description", content: "دسترسی مدیران به پنل مدیریت سایت بیست کام." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -56,7 +56,7 @@ function AuthPage() {
           </span>
           <h1 className="mt-5 text-2xl">ورود مدیریت</h1>
           <p className="mt-2 text-sm leading-7 text-muted-foreground">
-            این بخش مخصوص مدیران کارخانه ۲۰کام است.
+            این بخش مخصوص مدیران کارخانه بیست کام است.
           </p>
 
           <form className="mt-6 space-y-4" onSubmit={onSubmit}>

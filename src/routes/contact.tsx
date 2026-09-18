@@ -10,14 +10,14 @@ import { instagramLink, toFa, whatsappLink } from "@/lib/format";
 export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
-      { title: "تماس با کارخانه ۲۰کام | سفارش عمده کلوچه و آرد" },
+      { title: "تماس با کارخانه بیست کام | سفارش عمده کلوچه و آرد" },
       {
         name: "description",
         content:
-          "راه‌های ارتباط با کارخانه ۲۰کام در اراک؛ واتساپ، اینستاگرام، آدرس کارخانه و ساعات کاری برای سفارش عمده.",
+          "راه‌های ارتباط با کارخانه بیست کام در اراک؛ واتساپ، اینستاگرام، آدرس کارخانه و ساعات کاری برای سفارش عمده.",
       },
-      { property: "og:title", content: "تماس با کارخانه ۲۰کام" },
-      { property: "og:description", content: "واتساپ، اینستاگرام و آدرس کارخانه ۲۰کام." },
+      { property: "og:title", content: "تماس با کارخانه بیست کام" },
+      { property: "og:description", content: "واتساپ، اینستاگرام و آدرس کارخانه بیست کام." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -45,7 +45,7 @@ function ContactPage() {
       <section className="border-b border-border bg-secondary/40">
         <div className="container-page py-16">
           <Reveal>
-            <h1 className="text-3xl md:text-5xl">تماس با ۲۰کام</h1>
+            <h1 className="text-3xl md:text-5xl">تماس با بیست کام</h1>
             <p className="mt-4 max-w-xl text-sm leading-8 text-muted-foreground">
               برای دریافت لیست قیمت عمده، نمونه محصول یا سفارش باکس هدیه سازمانی در ارتباط باشید.
             </p>
@@ -84,7 +84,7 @@ function ContactPage() {
               پیام واتساپ بدهید تا کارشناس فروش لیست قیمت به‌روز را ارسال کند.
             </p>
             <Button asChild size="lg" className="mt-6">
-              <a href={whatsappLink(whatsapp, "سلام، درخواست لیست قیمت ۲۰کام را دارم.")} target="_blank" rel="noreferrer">
+              <a href={whatsappLink(whatsapp, "سلام، درخواست لیست قیمت بیست کام را دارم.")} target="_blank" rel="noreferrer">
                 گفتگو در واتساپ
               </a>
             </Button>
