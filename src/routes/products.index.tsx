@@ -14,13 +14,13 @@ export const Route = createFileRoute("/products/")({
   }),
   head: () => ({
     meta: [
-      { title: "محصولات ۲۰کام | کلوچه، شیرینی آردی، آرد بسته‌بندی و جعبه هدیه" },
+      { title: "محصولات بیست کام | کلوچه، شیرینی آردی، آرد بسته‌بندی و جعبه هدیه" },
       {
         name: "description",
         content:
-          "کاتالوگ کامل محصولات کارخانه ۲۰کام شامل کلوچه نرم، شیرینی سنتی آردی، آرد بسته‌بندی ۹۰۰ گرمی و باکس هدیه سازمانی.",
+          "کاتالوگ کامل محصولات کارخانه بیست کام شامل کلوچه نرم، شیرینی سنتی آردی، آرد بسته‌بندی ۹۰۰ گرمی و باکس هدیه سازمانی.",
       },
-      { property: "og:title", content: "محصولات کارخانه ۲۰کام" },
+      { property: "og:title", content: "محصولات کارخانه بیست کام" },
       { property: "og:description", content: "کاتالوگ محصولات کلوچه، شیرینی آردی و آرد بسته‌بندی." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -43,7 +43,7 @@ function ProductsPage() {
     <SiteLayout>
       <section className="surface-dark py-16">
         <div className="container-page">
-          <h1 className="text-3xl text-cream md:text-4xl">محصولات کارخانه ۲۰کام</h1>
+          <h1 className="text-3xl text-cream md:text-4xl">محصولات کارخانه بیست کام</h1>
           <p className="mt-4 max-w-2xl text-sm leading-8 text-cream/75">
             تمام محصولات با مواد اولیه درجه یک و تحت نظارت واحد کنترل کیفیت تولید می‌شوند.
           </p>

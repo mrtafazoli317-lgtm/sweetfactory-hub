@@ -19,13 +19,13 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/products/$slug")({
   head: ({ params }) => ({
     meta: [
-      { title: `محصول ${params.slug} | کارخانه ۲۰کام` },
+      { title: `محصول ${params.slug} | کارخانه بیست کام` },
       {
         name: "description",
-        content: "مشخصات کامل، قیمت و توضیحات محصول تولیدی کارخانه ۲۰کام.",
+        content: "مشخصات کامل، قیمت و توضیحات محصول تولیدی کارخانه بیست کام.",
       },
-      { property: "og:title", content: "محصولات کارخانه ۲۰کام" },
-      { property: "og:description", content: "مشخصات کامل و قیمت محصول کارخانه ۲۰کام." },
+      { property: "og:title", content: "محصولات کارخانه بیست کام" },
+      { property: "og:description", content: "مشخصات کامل و قیمت محصول کارخانه بیست کام." },
       { property: "og:type", content: "product" },
       { name: "twitter:card", content: "summary_large_image" },
     ],

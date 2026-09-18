@@ -9,16 +9,16 @@ import { contentMap, siteContentQuery, useContentValue } from "@/lib/data";
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
-      { title: "درباره کارخانه ۲۰کام | تولید کلوچه، کوکی و آرد بسته‌بندی" },
+      { title: "درباره کارخانه بیست کام | تولید کلوچه، کوکی و آرد بسته‌بندی" },
       {
         name: "description",
         content:
-          "آشنایی با کارخانه ۲۰کام در اراک؛ تولید کلوچه، کوکی، شیرینی آردی و آرد بسته‌بندی با کنترل کیفیت مستمر.",
+          "آشنایی با کارخانه بیست کام در اراک؛ تولید کلوچه، کوکی، شیرینی آردی و آرد بسته‌بندی با کنترل کیفیت مستمر.",
       },
-      { property: "og:title", content: "درباره کارخانه ۲۰کام" },
+      { property: "og:title", content: "درباره کارخانه بیست کام" },
       {
         property: "og:description",
-        content: "تجربه، کیفیت و خط تولید مدرن کارخانه ۲۰کام در اراک.",
+        content: "تجربه، کیفیت و خط تولید مدرن کارخانه بیست کام در اراک.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -28,7 +28,7 @@ export const Route = createFileRoute("/about")({
 });
 
 const values = [
-  { icon: ShieldCheck, title: "کنترل کیفیت مستمر", text: "در آزمایشگاه ۲۰کام" },
+  { icon: ShieldCheck, title: "کنترل کیفیت مستمر", text: "در آزمایشگاه بیست کام" },
   { icon: Leaf, title: "مواد اولیه درجه یک", text: "آرد گندم مرغوب" },
   { icon: Factory, title: "خط تولید مدرن", text: "با پیشرفته‌ترین دستگاه‌های روز" },
   { icon: Truck, title: "ارسال به سراسر کشور", text: "" },
@@ -56,7 +56,7 @@ function AboutPage() {
           <div className="overflow-hidden rounded-3xl shadow-lift">
             <img
               src={useContentValue(map, "about_image") || "/images/factory-line.jpg"}
-              alt="خط تولید کارخانه ۲۰کام"
+              alt="خط تولید کارخانه بیست کام"
               loading="lazy"
               className="aspect-[4/3] w-full object-cover"
             />

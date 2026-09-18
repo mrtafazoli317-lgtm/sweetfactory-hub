@@ -26,7 +26,7 @@ export function SiteFooter() {
           <h3 className="text-sm font-bold text-gold">دسترسی سریع</h3>
           <ul className="mt-4 space-y-2 text-sm opacity-85">
             <li><Link to="/products">محصولات</Link></li>
-            <li><Link to="/blog">مجله ۲۰کام</Link></li>
+            <li><Link to="/blog">مجله بیست کام</Link></li>
             <li><Link to="/about">درباره کارخانه</Link></li>
             <li><Link to="/contact">تماس با ما</Link></li>
             <li><Link to="/auth">ورود مدیریت</Link></li>

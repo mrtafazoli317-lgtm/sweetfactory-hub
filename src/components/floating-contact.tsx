@@ -18,7 +18,7 @@ export function FloatingContact() {
         href={instagramLink(instagram)}
         target="_blank"
         rel="noreferrer"
-        aria-label="اینستاگرام ۲۰کام"
+        aria-label="اینستاگرام بیست کام"
         className={cn(
           "group flex size-12 items-center justify-center rounded-full bg-accent text-accent-foreground shadow-lift transition-all duration-300",
           open
@@ -29,10 +29,10 @@ export function FloatingContact() {
         <Instagram className="size-5" />
       </a>
       <a
-        href={whatsappLink(whatsapp, "سلام، برای سفارش محصولات ۲۰کام تماس گرفتم.")}
+        href={whatsappLink(whatsapp, "سلام، برای سفارش محصولات بیست کام تماس گرفتم.")}
         target="_blank"
         rel="noreferrer"
-        aria-label="واتساپ ۲۰کام"
+        aria-label="واتساپ بیست کام"
         className={cn(
           "flex size-12 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lift transition-all duration-300 delay-75",
           open

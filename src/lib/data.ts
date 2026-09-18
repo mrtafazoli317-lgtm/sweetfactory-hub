@@ -98,13 +98,13 @@ export function contentMap(rows: SiteContentRow[] | undefined): Record<string, s
 }
 
 export const FALLBACK_CONTENT: Record<string, string> = {
-  brand_name: "۲۰کام",
+  brand_name: "بیست کام",
   brand_tagline: "کارخانه کلوچه و شیرینی سنتی",
   hero_title: "طعم اصیل سنتی، با کیفیت صنعتی",
   hero_subtitle: "تولید کلوچه، شیرینی آردی و آرد بسته‌بندی با بالاترین استانداردهای کیفی",
   hero_image: "/images/hero.jpg",
-  about_title: "درباره کارخانه ۲۰کام",
-  about_text: "۲۰کام در سال ۱۴۰۴ با هدفی متفاوت و با استفاده از مواد اولیه سالم و بدون هیچ‌گونه مواد افزودنی شروع به فعالیت کرد.",
+  about_title: "درباره کارخانه بیست کام",
+  about_text: "بیست کام در سال ۱۴۰۴ با هدفی متفاوت و با استفاده از مواد اولیه سالم و بدون هیچ‌گونه مواد افزودنی شروع به فعالیت کرد.",
   about_image: "/images/factory-line.jpg",
   contact_address: "ایران، اراک، شهرک صنعتی شماره ۱، خیابان نوآوران، پلاک ۲۷۹۷",
   contact_whatsapp: "09965169232",
