@@ -28,7 +28,7 @@ export function SiteHeader() {
     <header className="sticky top-0 z-50 border-b border-border/60 bg-background/85 backdrop-blur-lg">
       <div className="container-page flex h-18 items-center justify-between gap-4 py-3">
         <Link to="/" className="flex items-center leading-tight">
-          <span className="text-xl font-black tracking-[0.25em] text-brand-yellow drop-shadow-sm">
+          <span className="rounded-md border border-black/80 px-2.5 py-1 text-xl font-black tracking-[0.25em] text-brand-yellow drop-shadow-sm">
             20 K A M
           </span>
         </Link>
