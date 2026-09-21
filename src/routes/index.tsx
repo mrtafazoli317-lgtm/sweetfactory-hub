@@ -84,7 +84,7 @@ function HomePage() {
 
         <div className="container-page relative flex min-h-[86vh] flex-col justify-center py-24">
           <Reveal>
-            <span className="inline-flex items-center gap-2 rounded-full border border-gold/40 bg-espresso/40 px-4 py-1.5 text-xs font-medium text-gold backdrop-blur">
+            <span className="inline-flex items-center gap-2 rounded-full border border-foreground/60 bg-espresso/40 px-4 py-1.5 text-xs font-medium text-foreground backdrop-blur">
               <BadgeCheck className="size-4" />
               {useContentValue(map, "brand_tagline")}
             </span>
